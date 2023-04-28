@@ -12,16 +12,15 @@ data = pd.read_csv('songs.csv')
 
 def predict_mood(features, df):
     Xt = df.iloc[:, 1:4].values
-    yt = df.iloc[:, -1].values
-    X_train, X_test, y_train, y_test = train_test_split(Xt, yt, test_size=0.3, random_state=1) 
+    yt = df.iloc[:, -3:].values
 
     clf = DecisionTreeClassifier()
-    clf.fit(X_train, y_train)
+    clf.fit(Xt, yt)
 
     mood = clf.predict([features])[0]
     return np.array(mood)
 
-song_file = 'Jhoome_jo_pathhaan.mp3'
+song_file = 'songs/song_30.wav'
 clip_start = 20 
 clip_end = 40  
 y, sr = librosa.load(song_file, duration=200)
